@@ -142,7 +142,14 @@ class Calendar {
             return max + 1;
         }
         const td = document.createElement('td')
+        const dayId = getDayId(date)
+        const currentDayId = getDayId(new Date())
         const isCurrentMonth = date.getMonth() === month
+        const isCurrentDay = currentDayId === dayId
+
+        if (isCurrentDay) {
+            td.classList.add('current-day')
+        }
 
         td.innerHTML = `<div class="calendar_cell">
             <div class="calendar_date ${isCurrentMonth ? '' : 'calendar_date-diff'}">${date.getDate()}</div>
@@ -150,7 +157,6 @@ class Calendar {
         </div>`
 
         const eventContainer = td.querySelector('.calendar_events')
-        const dayId = getDayId(date)
         const events = this.#eventsMap.get(dayId) || []
         const finishedEvents = [];
 

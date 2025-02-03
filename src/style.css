@@ -49,9 +49,10 @@ body {
     align-items: center;
     gap: .3rem
 }
-.calendar .calendar_event-fullday {
+.calendar_event-fullday {
     position: absolute;
-    width: calc(100% * var(--days) + (var(--cell-padding) * 2 + 1px) * (var(--days) - 1));
+    --overflow: 0px;
+    width: calc(100% * var(--days) + (var(--cell-padding) * 2 + 1px) * (var(--days) - 1) + var(--overflow));
     background-color: var(--color);
     color: #fff;
     height: 20px;
@@ -74,4 +75,29 @@ body {
     display: block;
     border-radius: 50%;
     background-color: var(--color);
+}
+
+.calendar_event-overflow-left {
+    margin-left: calc(var(--cell-padding) * -1);
+    --overflow: var(--cell-padding);
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.calendar_event-overflow-right {
+    --overflow: var(--cell-padding);
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.calendar_event-overflow-right.calendar_event-overflow-left {
+    --overflow: calc(var(--cell-padding) * 2);
+}
+
+
+.calendar .calendar_event-doctor {
+    --color: #ff5858
+}
+
+.calendar .calendar_event-holidays {
+    --color: #74b057
 }

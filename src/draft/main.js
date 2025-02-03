@@ -8,7 +8,7 @@ import {
   endOfWeek,
   minDates,
   startOfWeek,
-} from "./date.js";
+} from "./draft/date.js";
 
 /**
  * @typedef {{name: string, start: Date, end: Date, fullDay?: boolean, type?: string}} CalendarEvent
@@ -69,19 +69,19 @@ class Calendar {
    * @returns {HTMLTableCellElement}
    */
   #buildCell(date, month, positionMap) {
-    // const getAvailablePosition = () => {
-    //   if (positionMap.size === 0) {
-    //     return 0;
-    //   }
-    //   const positions = Array.from(positionMap.values());
-    //   const max = Math.max(...positions);
-    //   for (let i = 0; i < max; i++) {
-    //     if (!positions.includes(i)) {
-    //       return i;
-    //     }
-    //   }
-    //   return max + 1;
-    // };
+    const getAvailablePosition = () => {
+      if (positionMap.size === 0) {
+        return 0;
+      }
+      const positions = Array.from(positionMap.values());
+      const max = Math.max(...positions);
+      for (let i = 0; i < max; i++) {
+        if (!positions.includes(i)) {
+          return i;
+        }
+      }
+      return max + 1;
+    };
     const td = document.createElement("td");
     const isCurrentMonth = date.getMonth() === month;
     td.innerHTML = `<div class="calendar__cell">

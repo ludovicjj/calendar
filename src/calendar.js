@@ -101,6 +101,12 @@ class Calendar {
         const finishedEvents = [];
 
         for (const event of events) {
+            const classes = ['calendar_event']
+            if (event.type) {
+                classes.push('calendar_event-' + event.type)
+            }
+
+
             // Début d'un évènement sur plusieurs jours
             if (
                 event.fullDay &&
@@ -108,20 +114,22 @@ class Calendar {
             ) {
                 const position = getAvailablePosition()
                 positionMap.set(event, position);
-                const endDate =  minDates([
-                    event.end,
-                    endOfWeek(date)
-                ])
+                const endDate =  minDates([event.end, endOfWeek(date)])
 
-                const days = diffInDay(
-                    date, // ?
-                    endDate
-                )
+                const days = diffInDay(date, endDate)
+
+                if (dayId !== getDayId(event.start)) {
+                    classes.push('calendar_event-overflow-left')
+                }
+                if (endDate !== event.end) {
+                    classes.push('calendar_event-overflow-right')
+                }
+                classes.push('calendar_event-fullday')
 
                 eventContainer.insertAdjacentHTML(
                     'beforeend',
                     `<div 
-                        class="calendar_event calendar_event-fullday"
+                        class="${classes.join(' ')}"
                         style="--days:${days}; --offset:${position}"
                     >
                         ${event.name}
@@ -134,7 +142,8 @@ class Calendar {
             }
 
             if (!event.fullDay) {
-                eventContainer.insertAdjacentHTML('beforeend', `<div class="calendar_event calendar_event-hour">
+                classes.push('calendar_event-hour')
+                eventContainer.insertAdjacentHTML('beforeend', `<div class="${classes.join(' ')}">
                     <span>${timeFormatter.format(event.start)} - ${event.name}</span>
                 </div>`)
             }

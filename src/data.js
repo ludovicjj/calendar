@@ -22,7 +22,7 @@ export const Events = [
     end: today.setDate(6).target,
   },
   {
-    name: "b",
+    name: "BatiPlus",
     fullDay: true,
     start: today.setDate(5).target,
     end: today.setDate(8).target,
